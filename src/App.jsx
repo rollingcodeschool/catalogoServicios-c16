@@ -4,18 +4,33 @@ import Login from "./components/pages/Login";
 import Administrador from "./components/pages/Administrador";
 import DetalleServicio from "./components/pages/DetalleServicio";
 import FormularioServicio from "./components/pages/FormularioServicio";
+import Error404 from "./components/pages/Error404";
+import Menu from "./components/shared/Menu";
+import Footer from "./components/shared/Footer";
 
 function App() {
   return (
     <BrowserRouter>
+      <Menu></Menu>
       <Routes>
-        <Route path="/" element={<Inicio></Inicio>}/>
-        <Route path="/login" element={<Login></Login>}/>
-        <Route path="/detalle" element={<DetalleServicio></DetalleServicio>}/>
-        <Route path="/administrador" element={<Administrador></Administrador>}/>
-        <Route path="/administrador/crear" element={<FormularioServicio></FormularioServicio>}/>
-        <Route path="/administrador/editar" element={<FormularioServicio></FormularioServicio>}/>
+        <Route path="/" element={<Inicio></Inicio>} />
+        <Route path="/login" element={<Login></Login>} />
+        <Route path="/detalle" element={<DetalleServicio></DetalleServicio>} />
+        <Route
+          path="/administrador"
+          element={<Administrador></Administrador>}
+        />
+        <Route
+          path="/administrador/crear"
+          element={<FormularioServicio></FormularioServicio>}
+        />
+        <Route
+          path="/administrador/editar"
+          element={<FormularioServicio></FormularioServicio>}
+        />
+        <Route path="*" element={<Error404></Error404>} />
       </Routes>
+      <Footer></Footer>
     </BrowserRouter>
   );
 }
