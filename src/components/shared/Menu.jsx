@@ -1,7 +1,6 @@
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { NavLink } from "react-router";
 
-
 const Menu = () => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
