@@ -7,14 +7,22 @@ import FormularioServicio from "./components/pages/FormularioServicio";
 import Error404 from "./components/pages/Error404";
 import Menu from "./components/shared/Menu";
 import Footer from "./components/shared/Footer";
+import { useEffect, useState } from "react";
 
 function App() {
+const usuarioSessionStorage = JSON.parse(sessionStorage.getItem('usuarioKey')) || false
+const [usuarioLogueado, setUsuarioLogueado] = useState(usuarioSessionStorage)
+
+useEffect(()=>{
+  sessionStorage.setItem('usuarioKey', JSON.stringify(usuarioLogueado))
+},[usuarioLogueado])
+
   return (
     <BrowserRouter>
-      <Menu></Menu>
+      <Menu usuarioLogueado={usuarioLogueado} setUsuarioLogueado={setUsuarioLogueado}></Menu>
       <Routes>
         <Route path="/" element={<Inicio></Inicio>} />
-        <Route path="/login" element={<Login></Login>} />
+        <Route path="/login" element={<Login setUsuarioLogueado={setUsuarioLogueado}></Login>} />
         <Route path="/detalle" element={<DetalleServicio></DetalleServicio>} />
         <Route
           path="/administrador"
