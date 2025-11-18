@@ -1,21 +1,35 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
-const FormularioServicio = () => {
+const FormularioServicio = ({ titulo, crearServicio, editarServicio }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
+    if (titulo === "Crear servicio") {
+      //agrego la logica de crear
+      crearServicio(data);
+      Swal.fire({
+        title: "Servicio creado",
+        text: `El servicio '${data.servicio}' fue creado correctamente`,
+        icon: "success",
+      });
+      reset()
+    } else {
+      //agregar la logica para editar
+    }
   };
 
   return (
     <main className="container my-4">
-      <h1>Titulo</h1>
+      <h1>{titulo}</h1>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Servicio</Form.Label>
@@ -26,19 +40,19 @@ const FormularioServicio = () => {
               required: "El servicio es un dato obligatorio",
               minLength: {
                 value: 5,
-                message:
-                  "El servicio debe contener como minimo 5 caracteres",
+                message: "El servicio debe contener como minimo 5 caracteres",
               },
               maxLength: {
                 value: 100,
-                message:
-                  "El servicio debe contener como maximo 100 caracteres",
+                message: "El servicio debe contener como maximo 100 caracteres",
               },
             })}
           />
-          <Form.Text className="text-danger">{errors.servicio?.message}</Form.Text>
+          <Form.Text className="text-danger">
+            {errors.servicio?.message}
+          </Form.Text>
         </Form.Group>
-       <Form.Group className="mb-3" controlId="formPrecio">
+        <Form.Group className="mb-3" controlId="formPrecio">
           <Form.Label>Precio*</Form.Label>
           <Form.Control
             type="number"
@@ -62,7 +76,7 @@ const FormularioServicio = () => {
             {errors.precio?.message}
           </Form.Text>
         </Form.Group>
-  <Form.Group className="mb-3" controlId="formImagen">
+        <Form.Group className="mb-3" controlId="formImagen">
           <Form.Label>Imagen URL*</Form.Label>
           <Form.Control
             type="text"
@@ -81,7 +95,7 @@ const FormularioServicio = () => {
             {errors.imagen?.message}
           </Form.Text>
         </Form.Group>
-         <Form.Group className="mb-3" controlId="formPrecio">
+        <Form.Group className="mb-3" controlId="formPrecio">
           <Form.Label>Categoría*</Form.Label>
           <Form.Select
             {...register("categoria", {
@@ -97,7 +111,7 @@ const FormularioServicio = () => {
             {errors.categoria?.message}
           </Form.Text>
         </Form.Group>
-         <Form.Group className="mb-3" controlId="formImagen">
+        <Form.Group className="mb-3" controlId="formImagen">
           <Form.Label>Descripción breve*</Form.Label>
           <Form.Control
             type="text"

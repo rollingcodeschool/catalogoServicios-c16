@@ -76,11 +76,11 @@ function App() {
           />
           <Route
             path="crear"
-            element={<FormularioServicio></FormularioServicio>}
+            element={<FormularioServicio titulo={'Crear servicio'} crearServicio={crearServicio}></FormularioServicio>}
           />
           <Route
             path="editar"
-            element={<FormularioServicio></FormularioServicio>}
+            element={<FormularioServicio titulo={'Editar servicio'} editarServicio={editarServicio}></FormularioServicio>}
           />
         </Route>
 
