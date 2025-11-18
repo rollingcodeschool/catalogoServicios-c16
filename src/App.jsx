@@ -14,10 +14,42 @@ function App() {
   const usuarioSessionStorage =
     JSON.parse(sessionStorage.getItem("usuarioKey")) || false;
   const [usuarioLogueado, setUsuarioLogueado] = useState(usuarioSessionStorage);
+  const serviciosLocalStorage = JSON.parse(localStorage.getItem('serviciosKey')) || []
+  const [servicios, setServicios] = useState(serviciosLocalStorage)
 
   useEffect(() => {
     sessionStorage.setItem("usuarioKey", JSON.stringify(usuarioLogueado));
   }, [usuarioLogueado]);
+
+  useEffect(()=>{
+    localStorage.setItem('serviciosKey', JSON.stringify(servicios))
+  },[servicios])
+
+  const crearServicio = (nuevoServicio)=>{
+// le voy agregar un id
+    nuevoServicio.id = crypto.randomUUID() //kdjfgh45-df454-dfjh34
+    setServicios([...servicios, nuevoServicio])
+  }
+
+  const editarServicio = (idServicio,servicioEditar) =>{
+    // buscar el objeto dentro del array que tiene tal id, y actualizar sus valores
+    const serviciosEditados = servicios.map((itemServicio)=>{
+      //buscar el objeto a editar
+       if(itemServicio.id === idServicio){
+         return {
+          ...itemServicio,
+          ...servicioEditar
+         }
+       }
+       return itemServicio 
+    })
+    setServicios(serviciosEditados)
+  }
+
+  const borrarServicio = (idServicio)=>{
+    const serviciosFiltrados = servicios.filter((itemServicio)=> itemServicio.id !== idServicio)
+    setServicios(serviciosFiltrados)
+  }
 
   return (
     <BrowserRouter>
