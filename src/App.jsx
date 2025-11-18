@@ -72,7 +72,7 @@ function App() {
         >
           <Route
             index
-            element={<Administrador></Administrador>}
+            element={<Administrador servicios={servicios}></Administrador>}
           />
           <Route
             path="crear"
