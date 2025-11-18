@@ -8,34 +8,50 @@ import Error404 from "./components/pages/Error404";
 import Menu from "./components/shared/Menu";
 import Footer from "./components/shared/Footer";
 import { useEffect, useState } from "react";
+import ProtectorRutas from "./components/routes/ProtectorRutas";
 
 function App() {
-const usuarioSessionStorage = JSON.parse(sessionStorage.getItem('usuarioKey')) || false
-const [usuarioLogueado, setUsuarioLogueado] = useState(usuarioSessionStorage)
+  const usuarioSessionStorage =
+    JSON.parse(sessionStorage.getItem("usuarioKey")) || false;
+  const [usuarioLogueado, setUsuarioLogueado] = useState(usuarioSessionStorage);
 
-useEffect(()=>{
-  sessionStorage.setItem('usuarioKey', JSON.stringify(usuarioLogueado))
-},[usuarioLogueado])
+  useEffect(() => {
+    sessionStorage.setItem("usuarioKey", JSON.stringify(usuarioLogueado));
+  }, [usuarioLogueado]);
 
   return (
     <BrowserRouter>
-      <Menu usuarioLogueado={usuarioLogueado} setUsuarioLogueado={setUsuarioLogueado}></Menu>
+      <Menu
+        usuarioLogueado={usuarioLogueado}
+        setUsuarioLogueado={setUsuarioLogueado}
+      ></Menu>
       <Routes>
         <Route path="/" element={<Inicio></Inicio>} />
-        <Route path="/login" element={<Login setUsuarioLogueado={setUsuarioLogueado}></Login>} />
+        <Route
+          path="/login"
+          element={<Login setUsuarioLogueado={setUsuarioLogueado}></Login>}
+        />
         <Route path="/detalle" element={<DetalleServicio></DetalleServicio>} />
         <Route
           path="/administrador"
-          element={<Administrador></Administrador>}
-        />
-        <Route
-          path="/administrador/crear"
-          element={<FormularioServicio></FormularioServicio>}
-        />
-        <Route
-          path="/administrador/editar"
-          element={<FormularioServicio></FormularioServicio>}
-        />
+          element={
+            <ProtectorRutas usuarioLogueado={usuarioLogueado}></ProtectorRutas>
+          }
+        >
+          <Route
+            index
+            element={<Administrador></Administrador>}
+          />
+          <Route
+            path="crear"
+            element={<FormularioServicio></FormularioServicio>}
+          />
+          <Route
+            path="editar"
+            element={<FormularioServicio></FormularioServicio>}
+          />
+        </Route>
+
         <Route path="*" element={<Error404></Error404>} />
       </Routes>
       <Footer></Footer>
