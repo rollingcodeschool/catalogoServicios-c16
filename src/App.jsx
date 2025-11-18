@@ -72,7 +72,7 @@ function App() {
         >
           <Route
             index
-            element={<Administrador servicios={servicios}></Administrador>}
+            element={<Administrador servicios={servicios} borrarServicio={borrarServicio}></Administrador>}
           />
           <Route
             path="crear"

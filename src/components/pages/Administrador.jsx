@@ -2,7 +2,7 @@ import { Table } from "react-bootstrap";
 import ItemTabla from "../services/ItemTabla";
 import { Link } from "react-router";
 
-const Administrador = ({servicios}) => {
+const Administrador = ({servicios, borrarServicio}) => {
   return (
     <main className="container my-4">
       <div className="d-flex justify-content-between align-items-center">
@@ -20,7 +20,7 @@ const Administrador = ({servicios}) => {
         </thead>
         <tbody>
           {
-            servicios.map((servicio, indice)=><ItemTabla key={servicio.id} servicio={servicio} fila={indice + 1}></ItemTabla>)
+            servicios.map((servicio, indice)=><ItemTabla key={servicio.id} servicio={servicio} fila={indice + 1} borrarServicio={borrarServicio}></ItemTabla>)
           }
         </tbody>
       </Table>
