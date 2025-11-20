@@ -51,6 +51,11 @@ function App() {
     setServicios(serviciosFiltrados)
   }
 
+  const buscarServicio = (idServicio)=>{
+    const servicioEncontrado = servicios.find((item)=> item.id === idServicio)
+    return servicioEncontrado
+  }
+
   return (
     <BrowserRouter>
       <Menu
@@ -79,8 +84,8 @@ function App() {
             element={<FormularioServicio titulo={'Crear servicio'} crearServicio={crearServicio}></FormularioServicio>}
           />
           <Route
-            path="editar"
-            element={<FormularioServicio titulo={'Editar servicio'} editarServicio={editarServicio}></FormularioServicio>}
+            path="editar/:id"
+            element={<FormularioServicio titulo={'Editar servicio'} editarServicio={editarServicio} buscarServicio={buscarServicio}></FormularioServicio>}
           />
         </Route>
 

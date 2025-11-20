@@ -1,4 +1,5 @@
 import { Button } from "react-bootstrap";
+import { Link } from "react-router";
 import Swal from "sweetalert2";
 
 const ItemTabla = ({ servicio, fila, borrarServicio }) => {
@@ -32,9 +33,9 @@ const ItemTabla = ({ servicio, fila, borrarServicio }) => {
       <td>{servicio.servicio}</td>
       <td>${servicio.precio}</td>
       <td>
-        <Button variant="warning" className="me-2">
+        <Link className="me-2 btn btn-warning" to={`/administrador/editar/${servicio.id}`}>
           Editar
-        </Button>
+        </Link>
         <Button variant="danger" onClick={eliminarServicio}>
           Borrar
         </Button>

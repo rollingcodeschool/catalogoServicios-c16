@@ -1,15 +1,38 @@
+import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router";
 import Swal from "sweetalert2";
 
-const FormularioServicio = ({ titulo, crearServicio, editarServicio }) => {
+const FormularioServicio = ({
+  titulo,
+  crearServicio,
+  editarServicio,
+  buscarServicio,
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
+    setValue,
   } = useForm();
+  const { id } = useParams();
+
+  useEffect(() => {
+    // si estoy editando entonces busco el objeto para dibujar en el formulario
+    if (titulo === "Editar servicio") {
+      const servicioBuscado = buscarServicio(id);
+      console.log(servicioBuscado);
+      setValue("servicio", servicioBuscado.servicio);
+      setValue("precio", servicioBuscado.precio);
+      setValue("categoria", servicioBuscado.categoria);
+      setValue("descripcion_breve", servicioBuscado.descripcion_breve);
+      setValue("descripcion_amplia", servicioBuscado.descripcion_amplia);
+      setValue("imagen", servicioBuscado.imagen);
+    }
+  }, []);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -21,9 +44,15 @@ const FormularioServicio = ({ titulo, crearServicio, editarServicio }) => {
         text: `El servicio '${data.servicio}' fue creado correctamente`,
         icon: "success",
       });
-      reset()
+      reset();
     } else {
       //agregar la logica para editar
+      editarServicio(id, data);
+       Swal.fire({
+        title: "Servicio editado",
+        text: `El servicio '${data.servicio}' fue editado correctamente`,
+        icon: "success",
+      });
     }
   };
 
