@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Swal from "sweetalert2";
 
 const FormularioServicio = ({
@@ -19,6 +19,7 @@ const FormularioServicio = ({
     setValue,
   } = useForm();
   const { id } = useParams();
+  const navegacion = useNavigate()
 
   useEffect(() => {
     // si estoy editando entonces busco el objeto para dibujar en el formulario
@@ -53,6 +54,7 @@ const FormularioServicio = ({
         text: `El servicio '${data.servicio}' fue editado correctamente`,
         icon: "success",
       });
+      navegacion('/administrador')
     }
   };
 
