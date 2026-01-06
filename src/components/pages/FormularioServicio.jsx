@@ -4,10 +4,10 @@ import Form from "react-bootstrap/Form";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import Swal from "sweetalert2";
+import { crearServicioApi } from "../../helpers/queries";
 
 const FormularioServicio = ({
   titulo,
-  crearServicio,
   editarServicio,
   buscarServicio,
 }) => {
@@ -35,17 +35,25 @@ const FormularioServicio = ({
     }
   }, []);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
     if (titulo === "Crear servicio") {
       //agrego la logica de crear
-      crearServicio(data);
-      Swal.fire({
-        title: "Servicio creado",
-        text: `El servicio '${data.servicio}' fue creado correctamente`,
-        icon: "success",
-      });
-      reset();
+      const respuestaServicioCreado = await crearServicioApi(data)
+      if(respuestaServicioCreado && respuestaServicioCreado.status === 201){
+        Swal.fire({
+          title: "Servicio creado",
+          text: `El servicio '${data.servicio}' fue creado correctamente`,
+          icon: "success",
+        });
+        reset();
+      }else{
+        Swal.fire({
+          title: "Ocurrio un error al mostrar el servicio",
+          text: `El servicio '${data.servicio}' no fue creado.`,
+          icon: "error",
+        });
+      }
     } else {
       //agregar la logica para editar
       editarServicio(id, data);
@@ -134,9 +142,10 @@ const FormularioServicio = ({
             })}
           >
             <option value="">Seleccione una opcion</option>
-            <option value="Infusiones">Desarrollo Web</option>
-            <option value="Batidos">Backend & API</option>
-            <option value="dulce">Consultoría</option>
+            <option value="Desarrollo Web">Desarrollo Web</option>
+            <option value="Backend y API">Backend & API</option>
+            <option value="Consultoría">Consultoría</option>
+            <option value="Otros">Otros</option>
           </Form.Select>
           <Form.Text className="text-danger">
             {errors.categoria?.message}

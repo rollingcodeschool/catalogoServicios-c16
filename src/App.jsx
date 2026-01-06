@@ -25,11 +25,7 @@ function App() {
     localStorage.setItem('serviciosKey', JSON.stringify(servicios))
   },[servicios])
 
-  const crearServicio = (nuevoServicio)=>{
-// le voy agregar un id
-    nuevoServicio.id = crypto.randomUUID() //kdjfgh45-df454-dfjh34
-    setServicios([...servicios, nuevoServicio])
-  }
+
 
   const editarServicio = (idServicio,servicioEditar) =>{
     // buscar el objeto dentro del array que tiene tal id, y actualizar sus valores
@@ -81,7 +77,7 @@ function App() {
           />
           <Route
             path="crear"
-            element={<FormularioServicio titulo={'Crear servicio'} crearServicio={crearServicio}></FormularioServicio>}
+            element={<FormularioServicio titulo={'Crear servicio'}></FormularioServicio>}
           />
           <Route
             path="editar/:id"
