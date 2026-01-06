@@ -2,7 +2,7 @@ import { Table } from "react-bootstrap";
 import ItemTabla from "../services/ItemTabla";
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
-import { listarProductosApi } from "../../helpers/queries";
+import { listarServiciosApi } from "../../helpers/queries";
 
 const Administrador = () => {
   const [servicios, setServicios] = useState([]);
@@ -12,7 +12,7 @@ const Administrador = () => {
   }, []);
 
   const cargarServicios = async() => {
-    const respuestaServicios = await listarProductosApi();
+    const respuestaServicios = await listarServiciosApi();
     console.log(respuestaServicios);
     if(respuestaServicios && respuestaServicios.status === 200){
       const datos = await respuestaServicios.json();
