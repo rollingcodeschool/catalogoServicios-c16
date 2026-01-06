@@ -26,7 +26,6 @@ function App() {
   },[servicios])
 
 
-
   const editarServicio = (idServicio,servicioEditar) =>{
     // buscar el objeto dentro del array que tiene tal id, y actualizar sus valores
     const serviciosEditados = servicios.map((itemServicio)=>{
@@ -42,10 +41,6 @@ function App() {
     setServicios(serviciosEditados)
   }
 
-  const borrarServicio = (idServicio)=>{
-    const serviciosFiltrados = servicios.filter((itemServicio)=> itemServicio.id !== idServicio)
-    setServicios(serviciosFiltrados)
-  }
 
   const buscarServicio = (idServicio)=>{
     const servicioEncontrado = servicios.find((item)=> item.id === idServicio)
@@ -73,7 +68,7 @@ function App() {
         >
           <Route
             index
-            element={<Administrador servicios={servicios} borrarServicio={borrarServicio}></Administrador>}
+            element={<Administrador></Administrador>}
           />
           <Route
             path="crear"
