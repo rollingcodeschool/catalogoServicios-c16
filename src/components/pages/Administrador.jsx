@@ -1,13 +1,34 @@
 import { Table } from "react-bootstrap";
 import ItemTabla from "../services/ItemTabla";
 import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { listarProductosApi } from "../../helpers/queries";
 
-const Administrador = ({servicios, borrarServicio}) => {
+const Administrador = () => {
+  const [servicios, setServicios] = useState([]);
+
+  useEffect(() => {
+    cargarServicios();
+  }, []);
+
+  const cargarServicios = async() => {
+    const respuestaServicios = await listarProductosApi();
+    console.log(respuestaServicios);
+    if(respuestaServicios && respuestaServicios.status === 200){
+      const datos = await respuestaServicios.json();
+      setServicios(datos)
+    }else{
+      alert('Ocurrio un error no se puede mostrar los productos en este momento')
+    }
+  };
+
   return (
     <main className="container my-4">
       <div className="d-flex justify-content-between align-items-center">
         <h1>Administrar servicios</h1>
-        <Link className="btn btn-primary" to={'/administrador/crear'}>Crear</Link>
+        <Link className="btn btn-primary" to={"/administrador/crear"}>
+          Crear
+        </Link>
       </div>
       <Table striped bordered hover>
         <thead>
@@ -19,9 +40,13 @@ const Administrador = ({servicios, borrarServicio}) => {
           </tr>
         </thead>
         <tbody>
-          {
-            servicios.map((servicio, indice)=><ItemTabla key={servicio.id} servicio={servicio} fila={indice + 1} borrarServicio={borrarServicio}></ItemTabla>)
-          }
+          {servicios.map((servicio, indice) => (
+            <ItemTabla
+              key={servicio._id}
+              servicio={servicio}
+              fila={indice + 1}
+            ></ItemTabla>
+          ))}
         </tbody>
       </Table>
     </main>
