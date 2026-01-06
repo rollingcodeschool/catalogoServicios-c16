@@ -1,17 +1,17 @@
 import { Button, Card, Col } from "react-bootstrap";
 
-const CardServicio = () => {
+const CardServicio = ({servicio}) => {
   return (
     <Col>
       <Card >
         <Card.Img variant="top" src="https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg" />
         <Card.Body>
-          <Card.Title>Sitio Web Institucional (5-7 Páginas)</Card.Title>
+          <Card.Title>{servicio.servicio}</Card.Title>
           <Card.Text>
-            Web profesional *responsive* con secciones clave: Inicio, Servicios, Quiénes Somos, Contacto y Blog (sin funcionalidad de publicación).
+            {servicio.descripcion_breve}
           </Card.Text>
           <Card.Text>
-            Precio: $300000
+            Precio: $ {servicio.precio}
           </Card.Text>
           <Button variant="primary">Ver detalle</Button>
         </Card.Body>
