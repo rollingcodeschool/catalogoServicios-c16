@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import Swal from "sweetalert2";
 import { borrarServicioApi } from "../../helpers/queries";
 
-const ItemTabla = ({ servicio, fila }) => {
+const ItemTabla = ({ servicio, fila, servicios, setServicios }) => {
   const eliminarServicio = () => {
     Swal.fire({
       title: "¿Estas seguro de eliminar el servicio?",
@@ -24,6 +24,9 @@ const ItemTabla = ({ servicio, fila }) => {
             text: `El servicio ${servicio.servicio} fue eliminado correctamente`,
             icon: "success",
           });
+          // agregar algo para que la tabla de servicios se actulice
+          const serviciosActualizados = servicios.filter((item)=> item._id !== servicio._id)
+          setServicios(serviciosActualizados)
         }else{
            Swal.fire({
             title: "Ocurrio un error al intentar borrar el servicio",

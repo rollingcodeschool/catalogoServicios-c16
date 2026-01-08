@@ -45,6 +45,8 @@ const Administrador = () => {
               key={servicio._id}
               servicio={servicio}
               fila={indice + 1}
+              servicios={servicios}
+              setServicios={setServicios}
             ></ItemTabla>
           ))}
         </tbody>
