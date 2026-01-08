@@ -4,7 +4,7 @@ const CardServicio = ({servicio}) => {
   return (
     <Col>
       <Card >
-        <Card.Img variant="top" src="https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg" />
+        <Card.Img variant="top" src={servicio.imagen} alt={servicio.servicio} />
         <Card.Body>
           <Card.Title>{servicio.servicio}</Card.Title>
           <Card.Text>
