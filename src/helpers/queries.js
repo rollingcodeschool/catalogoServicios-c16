@@ -42,3 +42,18 @@ export const buscarServicioApi = async(id) =>{
         console.error(error)
     }
 }
+
+export const editarServicioApi = async(servicio, id) =>{
+    try {
+        const respuesta = await fetch(urlServicios + `/${id}`,{
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(servicio)
+        })
+        return respuesta
+    } catch (error) {
+        console.error(error)
+    }
+}
