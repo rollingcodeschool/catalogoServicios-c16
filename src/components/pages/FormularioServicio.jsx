@@ -7,9 +7,7 @@ import Swal from "sweetalert2";
 import { crearServicioApi } from "../../helpers/queries";
 
 const FormularioServicio = ({
-  titulo,
-  editarServicio,
-  buscarServicio,
+  titulo
 }) => {
   const {
     register,
