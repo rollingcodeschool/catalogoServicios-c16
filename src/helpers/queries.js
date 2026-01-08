@@ -33,3 +33,12 @@ export const borrarServicioApi = async(id) =>{
         console.error(error)
     }
 }
+
+export const buscarServicioApi = async(id) =>{
+    try {
+        const respuesta = await fetch(urlServicios+ `/${id}`)
+        return respuesta
+    } catch (error) {
+        console.error(error)
+    }
+}

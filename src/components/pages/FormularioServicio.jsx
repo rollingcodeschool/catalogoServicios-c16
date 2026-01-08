@@ -4,11 +4,9 @@ import Form from "react-bootstrap/Form";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import Swal from "sweetalert2";
-import { crearServicioApi } from "../../helpers/queries";
+import { buscarServicioApi, crearServicioApi } from "../../helpers/queries";
 
-const FormularioServicio = ({
-  titulo
-}) => {
+const FormularioServicio = ({ titulo }) => {
   const {
     register,
     handleSubmit,
@@ -17,35 +15,43 @@ const FormularioServicio = ({
     setValue,
   } = useForm();
   const { id } = useParams();
-  const navegacion = useNavigate()
+  const navegacion = useNavigate();
 
   useEffect(() => {
+    cargarDatos();
+  }, []);
+
+  const cargarDatos = async () => {
     // si estoy editando entonces busco el objeto para dibujar en el formulario
     if (titulo === "Editar servicio") {
-      const servicioBuscado = buscarServicio(id);
-      console.log(servicioBuscado);
-      setValue("servicio", servicioBuscado.servicio);
-      setValue("precio", servicioBuscado.precio);
-      setValue("categoria", servicioBuscado.categoria);
-      setValue("descripcion_breve", servicioBuscado.descripcion_breve);
-      setValue("descripcion_amplia", servicioBuscado.descripcion_amplia);
-      setValue("imagen", servicioBuscado.imagen);
+      // const servicioBuscado = buscarServicio(id);
+      const respuestaServicio = await buscarServicioApi(id);
+      if (respuestaServicio && respuestaServicio.status === 200) {
+        const servicioBuscado = await respuestaServicio.json();
+
+        setValue("servicio", servicioBuscado.servicio);
+        setValue("precio", servicioBuscado.precio);
+        setValue("categoria", servicioBuscado.categoria);
+        setValue("descripcion_breve", servicioBuscado.descripcion_breve);
+        setValue("descripcion_amplia", servicioBuscado.descripcion_amplia);
+        setValue("imagen", servicioBuscado.imagen);
+      }
     }
-  }, []);
+  };
 
   const onSubmit = async (data) => {
     console.log(data);
     if (titulo === "Crear servicio") {
       //agrego la logica de crear
-      const respuestaServicioCreado = await crearServicioApi(data)
-      if(respuestaServicioCreado && respuestaServicioCreado.status === 201){
+      const respuestaServicioCreado = await crearServicioApi(data);
+      if (respuestaServicioCreado && respuestaServicioCreado.status === 201) {
         Swal.fire({
           title: "Servicio creado",
           text: `El servicio '${data.servicio}' fue creado correctamente`,
           icon: "success",
         });
         reset();
-      }else{
+      } else {
         Swal.fire({
           title: "Ocurrio un error al mostrar el servicio",
           text: `El servicio '${data.servicio}' no fue creado.`,
@@ -54,13 +60,13 @@ const FormularioServicio = ({
       }
     } else {
       //agregar la logica para editar
-      editarServicio(id, data);
-       Swal.fire({
+      // editarServicio(id, data);
+      Swal.fire({
         title: "Servicio editado",
         text: `El servicio '${data.servicio}' fue editado correctamente`,
         icon: "success",
       });
-      navegacion('/administrador')
+      navegacion("/administrador");
     }
   };
 
